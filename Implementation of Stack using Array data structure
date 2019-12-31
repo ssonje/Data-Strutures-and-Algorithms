@@ -1,0 +1,465 @@
+/*
+Stack Operations...........
+1. isEmpty
+2. isFull
+3. Push 
+4. Pop
+5. Display
+6. Change
+7. Peek
+8. Count
+*/
+
+#include<iostream>
+using namespace std;
+
+class stack
+{
+	int array[5];
+	
+	public:
+		int top;
+		
+		stack()
+		{
+			top=-1;
+		}
+		
+		void set();
+		bool isEmpty();
+		bool isFull();
+		void push(int val);
+		int pop();	
+		void display();
+		void peek(int pos);
+		void change(int pos,int val);
+		int count();
+};
+
+void stack :: set()
+{
+	for(int i=0;i<5;i++)
+	{
+		array[i]=0;
+	}
+}
+
+bool stack :: isEmpty()
+{
+	if(top==-1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool stack :: isFull()
+{
+	if(top==4)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}	
+}
+
+void stack :: push(int val)
+{
+	if(isFull())
+	{
+		cout<<"\nStack Overflow......";
+	}
+	else
+	{
+		top++;
+		array[top] = val;
+		cout<<"Value pushed successfully";	
+	}
+}
+
+int stack :: pop()
+{
+	if(isEmpty())
+	{
+		cout<<"\nStack underflow....";
+	}
+	else
+	{
+		int popValue = array[top];
+		array[top]=0;
+		top--;
+		return popValue;
+	}
+}
+
+void stack :: display()
+{
+	cout<<"\nThe stack elements are :- \n";
+	for(int i=4;i>=0;i--)
+	{
+		cout<<array[i]<<endl;
+	}
+}
+
+void stack :: peek(int pos)
+{
+	if(pos<-1 || pos>4)
+	{
+		cout<<"\nInvalid Position";
+	}
+	else
+	{
+		cout<<"\nElement of that position is :- "<<array[pos];	
+	}
+}
+
+void stack :: change(int pos, int val)
+{
+	array[pos] = val;
+	cout<<"\nValue at that position is changed..";
+}
+
+int stack :: count()
+{
+	int count_no = top + 1;
+	return count_no;
+}
+
+int main()
+{
+	stack s;
+	char option;
+	int case_option;
+	int value;
+	int position,value_to_change;
+	int posi;
+	int element;
+	s.set();
+	
+	do
+	{
+		cout<<"\n\nCase 1 :- Is Empty condition";
+		cout<<"\nCase 2 :- Is Full condition";
+		cout<<"\nCase 3 :- Push Function";
+		cout<<"\nCase 4 :- Pop Function";
+		cout<<"\nCase 5 :- Count Function";
+		cout<<"\nCase 6 :- Change Function";
+		cout<<"\nCase 7 :- Peek Function";
+		cout<<"\nCase 8 :- Display Function";
+		
+		cout<<"\n\nEnter your case :- ";
+		cin>>case_option;
+		
+		switch(case_option)
+		{
+			case 1:
+				cout<<"\nResult :- "<<s.isEmpty();
+				break;
+				
+			case 2:
+				cout<<"\nResult :- "<<s.isFull();
+				break;
+				
+			case 3:
+				if(s.top!=4)
+				{
+					cout<<"\nEnter the element to be pushed :- ";
+					cin>>value;
+					s.push(value);	
+				}
+				else
+				{
+					cout<<"\nResult:- "<<s.isFull();
+				}
+				break;
+				
+			case 4:
+				if(s.top != -1)
+				{
+					cout<<"\nPop out element is :- ";
+					element = s.pop();
+					cout<<element;	
+				}
+				else
+				{
+					cout<<"\nResult :- "<<s.isEmpty();
+				}
+				break;
+				
+			case 5:
+				cout<<"\nNumber of elements :- "<<s.count();
+				break;
+				
+			case 6:
+				cout<<"\nEnter the position to change the value :- ";
+				cin>>position;
+				cout<<"\nEnter the value to change :- ";
+				cin>>value_to_change;
+				s.change(position,value_to_change);
+				break;
+				
+			case 7:
+				cout<<"\nEnter the position to get the value :- ";
+				cin>>posi;
+				s.peek(posi);
+				break;
+				
+			case 8:
+				s.display();
+				break;
+				
+			default:
+				cout<<"\nInvalid Case ..... Please enter the valid case ...";
+				
+		}
+		
+		cout<<"\n\nDo you want to test another case :- ";
+		cin>>option;
+		
+	}while(option=='y');
+	return 0;
+}
+
+/*
+Output :-
+
+Case 1 :- Is Empty condition
+Case 2 :- Is Full condition
+Case 3 :- Push Function
+Case 4 :- Pop Function
+Case 5 :- Count Function
+Case 6 :- Change Function
+Case 7 :- Peek Function
+Case 8 :- Display Function
+
+Enter your case :- 1
+
+Result :- 1
+
+Do you want to test another case :- y
+
+Case 1 :- Is Empty condition
+Case 2 :- Is Full condition
+Case 3 :- Push Function
+Case 4 :- Pop Function
+Case 5 :- Count Function
+Case 6 :- Change Function
+Case 7 :- Peek Function
+Case 8 :- Display Function
+
+Enter your case :- 4
+
+Result :- 1
+
+Do you want to test another case :- y
+
+Case 1 :- Is Empty condition
+Case 2 :- Is Full condition
+Case 3 :- Push Function
+Case 4 :- Pop Function
+Case 5 :- Count Function
+Case 6 :- Change Function
+Case 7 :- Peek Function
+Case 8 :- Display Function
+
+Enter your case :- 3
+
+Enter the element to be pushed :- 122
+Value pushed successfully
+
+Do you want to test another case :- y
+
+Case 1 :- Is Empty condition
+Case 2 :- Is Full condition
+Case 3 :- Push Function
+Case 4 :- Pop Function
+Case 5 :- Count Function
+Case 6 :- Change Function
+Case 7 :- Peek Function
+Case 8 :- Display Function
+
+Enter your case :- 3
+
+Enter the element to be pushed :- 3333333
+Value pushed successfully
+
+Do you want to test another case :- y
+
+Case 1 :- Is Empty condition
+Case 2 :- Is Full condition
+Case 3 :- Push Function
+Case 4 :- Pop Function
+Case 5 :- Count Function
+Case 6 :- Change Function
+Case 7 :- Peek Function
+Case 8 :- Display Function
+
+Enter your case :- 3
+
+Enter the element to be pushed :- 666
+Value pushed successfully
+
+Do you want to test another case :- y
+
+Case 1 :- Is Empty condition
+Case 2 :- Is Full condition
+Case 3 :- Push Function
+Case 4 :- Pop Function
+Case 5 :- Count Function
+Case 6 :- Change Function
+Case 7 :- Peek Function
+Case 8 :- Display Function
+
+Enter your case :- 3
+
+Enter the element to be pushed :- 789
+Value pushed successfully
+
+Do you want to test another case :- y
+
+Case 1 :- Is Empty condition
+Case 2 :- Is Full condition
+Case 3 :- Push Function
+Case 4 :- Pop Function
+Case 5 :- Count Function
+Case 6 :- Change Function
+Case 7 :- Peek Function
+Case 8 :- Display Function
+
+Enter your case :- 3
+
+Enter the element to be pushed :- 8765
+Value pushed successfully
+
+Do you want to test another case :- y
+
+Case 1 :- Is Empty condition
+Case 2 :- Is Full condition
+Case 3 :- Push Function
+Case 4 :- Pop Function
+Case 5 :- Count Function
+Case 6 :- Change Function
+Case 7 :- Peek Function
+Case 8 :- Display Function
+
+Enter your case :- 3
+
+Result:- 1
+
+Do you want to test another case :- y
+
+Case 1 :- Is Empty condition
+Case 2 :- Is Full condition
+Case 3 :- Push Function
+Case 4 :- Pop Function
+Case 5 :- Count Function
+Case 6 :- Change Function
+Case 7 :- Peek Function
+Case 8 :- Display Function
+
+Enter your case :- 5
+
+Number of elements :- 5
+
+Do you want to test another case :- y
+
+Case 1 :- Is Empty condition
+Case 2 :- Is Full condition
+Case 3 :- Push Function
+Case 4 :- Pop Function
+Case 5 :- Count Function
+Case 6 :- Change Function
+Case 7 :- Peek Function
+Case 8 :- Display Function
+
+Enter your case :- 8
+
+The stack elements are :-
+8765
+789
+666
+3333333
+122
+
+
+Do you want to test another case :- y
+
+Case 1 :- Is Empty condition
+Case 2 :- Is Full condition
+Case 3 :- Push Function
+Case 4 :- Pop Function
+Case 5 :- Count Function
+Case 6 :- Change Function
+Case 7 :- Peek Function
+Case 8 :- Display Function
+
+Enter your case :- 6
+
+Enter the position to change the value :- 1
+
+Enter the value to change :- 44444444
+
+Value at that position is changed..
+
+Do you want to test another case :- y
+
+Case 1 :- Is Empty condition
+Case 2 :- Is Full condition
+Case 3 :- Push Function
+Case 4 :- Pop Function
+Case 5 :- Count Function
+Case 6 :- Change Function
+Case 7 :- Peek Function
+Case 8 :- Display Function
+
+Enter your case :- 8
+
+The stack elements are :-
+8765
+789
+666
+44444444
+122
+
+
+Do you want to test another case :- y
+
+Case 1 :- Is Empty condition
+Case 2 :- Is Full condition
+Case 3 :- Push Function
+Case 4 :- Pop Function
+Case 5 :- Count Function
+Case 6 :- Change Function
+Case 7 :- Peek Function
+Case 8 :- Display Function
+
+Enter your case :- 7
+
+Enter the position to get the value :- 2
+
+Element of that position is :- 666
+
+Do you want to test another case :- y
+
+Case 1 :- Is Empty condition
+Case 2 :- Is Full condition
+Case 3 :- Push Function
+Case 4 :- Pop Function
+Case 5 :- Count Function
+Case 6 :- Change Function
+Case 7 :- Peek Function
+Case 8 :- Display Function
+
+Enter your case :- 99
+
+Invalid Case ..... Please enter the valid case ...
+
+Do you want to test another case :- n
+
+--------------------------------
+*/
