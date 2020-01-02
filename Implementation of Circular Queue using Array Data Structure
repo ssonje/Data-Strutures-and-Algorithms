@@ -1,0 +1,409 @@
+/*
+Circular Queue Data Structure :->
+*/
+
+#include<iostream>
+using namespace std;
+
+class queue
+{
+	int front,rear,arr[5];
+	
+	public:
+		
+		queue()
+		{
+			front = -1;
+			rear = -1;
+			for(int i=0;i<5;i++)
+			{
+				arr[i]=0;
+			}
+		}
+	
+		void enqueue(int val);	
+		int dequeue();
+		bool isEmpty();
+		bool isFull();
+		void display();
+};
+
+bool queue :: isEmpty()
+{
+	if(rear == -1 && front == -1)
+	{
+		cout<<"\nQueue is Empty";
+		return true;
+	}
+	else
+	{
+		cout<<"\nQueue is not Empty";
+		return false;
+	}
+}
+
+bool queue :: isFull()
+{
+	if((rear+1) % 5 == front)
+	{
+		cout<<"\nQueue is Full";
+		return true;
+	}
+	else
+	{
+		cout<<"\nQueue is not Full";
+		return false;
+	}
+}
+
+void queue :: enqueue(int val)
+{
+	if(isFull())
+	{
+		return;
+	}
+	else if(isEmpty())
+	{
+		rear = front = 0;
+	}
+	else
+	{
+		rear = (rear+1) % 5;
+	}
+	arr[rear] = val;
+	cout<<"\nValue added successfully";
+}
+
+int queue :: dequeue()
+{
+	int temp;
+	if(isEmpty())
+	{
+		return 0;
+	}
+	else if(rear == front)
+	{
+		temp = arr[front];
+		arr[front] = 0;
+		rear = front = -1;
+	}
+	else
+	{
+		temp = arr[front];
+		arr[front] = 0;
+		front = (front+1) % 5;
+	}
+	cout<<"\nValue removed successfully";
+	return temp;
+}
+
+void queue :: display()
+{
+	cout<<"\nThe elements of queue are as follows :- \n";
+	for(int i=0;i<5;i++)
+	{
+		cout<<arr[i]<<endl;
+	}
+}
+
+int main()
+{
+	int case_number;
+	char option;
+	queue q;
+	
+	do
+	{
+		cout<<"\nMenu :-> ";
+		cout<<"\nCase 1 :-> isEmpty Function";
+		cout<<"\nCase 2 :-> isFull Function";
+		cout<<"\nCase 3 :-> Enqueue Function";
+		cout<<"\nCase 4 :-> Dequeue Function";
+		cout<<"\nCase 5 :-> Dsiplay Function";
+		
+		cout<<"\n\nEnter the case :- ";
+		cin>>case_number;
+		
+		switch(case_number)
+		{
+			case 1:
+				q.isEmpty();
+				break;
+
+			case 2:
+				q.isFull();
+				break;
+				
+			case 3:
+				int value_enqueue;
+				cout<<"\nEnter the value to be enqueue :-> ";
+				cin>>value_enqueue;
+				q.enqueue(value_enqueue);
+				break;
+				
+			case 4:
+				cout<<"Value dequeue is :-> "<<q.dequeue();
+				break;
+				
+			case 5:
+				q.display();
+				break;
+
+			default:
+				cout<<"\nIvalid Case :-> Please enter the valid case....";
+				break;
+		}
+		
+		cout<<"\n\nDo you want access another function [Y/N]:-> ";
+		cin>>option;		
+	}while(option=='y');
+
+	return 0;
+}
+
+/*
+Output :-
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 1
+
+Queue is Empty
+
+Do you want access another function [Y/N]:-> y
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 2
+
+Queue is not Full
+
+Do you want access another function [Y/N]:-> y
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 3
+
+Enter the value to be enqueue :-> 12
+
+Queue is not Full
+Queue is Empty
+Value added successfully
+
+Do you want access another function [Y/N]:-> y
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 3
+
+Enter the value to be enqueue :-> 67
+
+Queue is not Full
+Queue is not Empty
+Value added successfully
+
+Do you want access another function [Y/N]:-> y
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 3
+
+Enter the value to be enqueue :-> 78
+
+Queue is not Full
+Queue is not Empty
+Value added successfully
+
+Do you want access another function [Y/N]:-> y
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 3
+
+Enter the value to be enqueue :-> 90
+
+Queue is not Full
+Queue is not Empty
+Value added successfully
+
+Do you want access another function [Y/N]:-> y
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 3
+
+Enter the value to be enqueue :-> 13
+
+Queue is not Full
+Queue is not Empty
+Value added successfully
+
+Do you want access another function [Y/N]:-> y
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 3
+
+Enter the value to be enqueue :-> 55
+
+Queue is Full
+
+Do you want access another function [Y/N]:-> y
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 5
+
+The elements of queue are as follows :-
+12
+67
+78
+90
+13
+
+
+Do you want access another function [Y/N]:-> y
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 2
+
+Queue is Full
+
+Do you want access another function [Y/N]:-> y
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 4
+
+Queue is not Empty
+Value removed successfullyValue dequeue is :-> 12
+
+Do you want access another function [Y/N]:-> y
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 3
+
+Enter the value to be enqueue :-> 1222
+
+Queue is not Full
+Queue is not Empty
+Value added successfully
+
+Do you want access another function [Y/N]:-> y
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 5
+
+The elements of queue are as follows :-
+1222
+67
+78
+90
+13
+
+
+Do you want access another function [Y/N]:-> y
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 4
+
+Queue is not Empty
+Value removed successfullyValue dequeue is :-> 67
+
+Do you want access another function [Y/N]:-> y
+
+Menu :->
+Case 1 :-> isEmpty Function
+Case 2 :-> isFull Function
+Case 3 :-> Enqueue Function
+Case 4 :-> Dequeue Function
+Case 5 :-> Dsiplay Function
+
+Enter the case :- 5
+
+The elements of queue are as follows :-
+1222
+0
+78
+90
+13
+
+
+Do you want access another function [Y/N]:-> n
+
+--------------------------------
+*/
