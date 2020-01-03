@@ -1,0 +1,529 @@
+/*
+	Doubly Link List using Classes, Objects, Pointers and Dynamic Memory Allocation.
+	
+	Operations :->
+		1. appendNode();
+		2. prependNode();
+		3. insertNodeAfter();
+		4. deleteNodeByKey();
+		5. updateNodeByKey();
+		6. displayAllNodes();
+*/
+
+#include<iostream>
+using namespace std;
+
+class node
+{
+	public: 
+	
+		int key,data;
+		node *previous;
+		node *next;
+
+		node()
+		{
+			key = 0;
+			data = 0;
+			previous = NULL;
+			next = NULL;
+		}	
+
+		node(int k , int d)
+		{
+			key = k;
+			data = d;
+			next = NULL;
+			previous = NULL;
+		}
+};
+
+class doublyLinkList
+{
+	public:
+
+		node *head;
+
+		doublyLinkList()
+		{
+			head=NULL;
+		}
+		
+		doublyLinkList(node *n)
+		{
+			head = n;
+		}
+
+		node *nodeExists(int key)
+		{
+			node *temp = NULL;
+			node *ptr_head = head;
+
+			while(ptr_head!=NULL)
+			{
+				if(ptr_head->key==key)
+				{
+					temp=ptr_head;
+				}
+				ptr_head = ptr_head -> next;
+			}
+			return temp;
+		}
+		
+		void appendNode(node *n)
+		{
+			if(nodeExists(n->key)!=NULL)
+			{
+				cout<<"\nNode already exits with the some same key value...\n";
+			}
+			else
+			{
+				if(head==NULL)
+				{
+					head=n;
+					cout<<"\nNode appended...\n";
+				}
+				else
+				{
+					node *temp;
+					temp=head;
+					
+					while(temp->next != NULL)
+					{
+						temp = temp -> next;
+					}
+					
+					temp -> next = n;
+					n -> previous = temp;
+					
+					cout<<"\nNode appended...\n";
+				}
+			}
+		}
+		
+		void prependNode(node *n)
+		{
+			if(nodeExists(n->key)!=NULL)
+			{
+				cout<<"\nNode already exits with the some same key value...\n";
+			}
+			else
+			{
+				
+				if(head==NULL)
+				{
+					head=n;
+					cout<<"\nNode prepended...\n";
+				}
+				else
+				{
+					head -> previous = n;
+					n -> next = head;
+					head = n;
+					
+					cout<<"\nNode prepended...\n";
+				}
+			}
+		}
+
+		void insertNodeAfter(int k, node *n)
+		{
+			node *ptr = nodeExists(k);	
+			
+			if(ptr==NULL)
+			{
+				cout<<"\nNo node exits with the key value "<<k<<"\n";	
+			}		
+			else
+			{
+				if(nodeExists(n->key)!=NULL)
+				{
+					cout<<"\nNode already exits with the some same key value...\n";
+				}
+				else
+				{
+					node *nextNode = ptr -> next;
+					
+					//inserting at the end
+					if(nextNode == NULL)
+					{
+						ptr -> next = n;
+						n -> previous = ptr; 
+					
+						cout<<"\nNode inserted at the end...\n";
+					}
+					
+					//inserting node in between
+					else
+					{					
+						n -> next = nextNode;
+						nextNode -> previous = n;
+						n -> previous = ptr;
+						ptr -> next = n;
+						
+						cout<<"\nNode is inserted...\n";	
+					}
+				}
+			}
+		}
+		
+		void deleteNodeByKey(int k)
+		{
+			node *ptr = nodeExists(k);
+			
+			if(ptr==NULL)
+			{
+				cout<<"\nPlease insert the node first...\n";
+			}
+			else
+			{
+				//deleting first node
+				if(head->key==k)
+				{
+					head = head -> next;
+					cout<<"\nNode unlined successfully...\n";
+				}
+				else
+				{
+					node *nextNode = ptr -> next;
+					node *previousNode = ptr -> previous;
+					
+					//deleting last node
+					if(nextNode==NULL)
+					{
+						previousNode -> next = NULL;
+						cout<<"\nLast node unlinked successfully...\n";
+					}
+					
+					//deleting in between node
+					else
+					{
+						previousNode -> next = nextNode;
+						nextNode -> previous = previousNode;
+						cout<<"Node unlinked successfully...\n";
+					}
+				}
+			}
+		}
+		
+		void updateNodeByKey(int k, int d)
+		{
+			node *ptr = nodeExists(k);
+		
+			if(ptr!=NULL)
+			{
+				ptr->data = d;
+				cout<<"\nValue updated successfully...\n";
+			}
+			else
+			{
+				cout<<"\nNo node exists with key value "<<k<<"\n";
+			}
+		}
+
+		void displayAllNodes()
+		{
+			if(head==NULL)
+			{
+				cout<<"\nNo node exits...\n";
+			}
+			else
+			{
+				cout<<"\nSingle link list values are as follows :-> ";
+				node *temp = head;
+				
+				while(temp!=NULL)
+				{
+					cout<<"\n\t"<<temp->key<<" => "<<temp->data<<"\n";
+					temp=temp->next;
+				}
+			}
+		}
+};
+		
+int main()
+{
+
+	int case_option;
+	doublyLinkList s;
+	char option;
+	int data1,key1;
+	int k1;
+	
+	do
+
+	{
+		cout<<"\nMenu:->";
+		cout<<"\nCase 1:- Append Node function";
+		cout<<"\nCase 2:- Prepend Node function";
+		cout<<"\nCase 3:- Insert Node After function";
+		cout<<"\nCase 4:- Delete Node Before function";
+		cout<<"\nCase 5:- Update Node By Key function";
+		cout<<"\nCase 6:- Display all Node function";
+		
+		cout<<"\n\nEnter the case :-> ";
+		cin>>case_option;
+
+		node *n = new node();
+
+		switch(case_option)
+		{
+
+			case 1:
+				cout<<"\nEnter the data to be stored in the respective node :- ";
+				cin>>data1;
+				cout<<"\nEnter the key to be stored in the respective node :- ";
+				cin>>key1;
+				n->data=data1;
+				n->key=key1;
+				s.appendNode(n);
+				break;
+				
+			case 2:
+				cout<<"\nEnter the data to be stored in the respective node :- ";
+				cin>>data1;
+				cout<<"\nEnter the key to be stored in the respective node :- ";
+				cin>>key1;
+				n->data=data1;
+				n->key=key1;
+				s.prependNode(n);
+				break;
+				
+			case 3:
+				cout<<"\nAt which k value you want to add another node :- ";
+				cin>>k1;
+				cout<<"\nEnter the data to be stored in the respective node :- ";
+				cin>>data1;
+				cout<<"\nEnter the key to be stored in the respective node :- ";
+				cin>>key1;
+				n->data=data1;
+				n->key=key1;
+				s.insertNodeAfter(k1,n);
+				break;
+
+				
+
+			case 4:
+				cout<<"\nAt which k value you want to delete the node :- ";
+				cin>>k1;
+				s.deleteNodeByKey(k1);
+				break;
+
+			case 5:
+				cout<<"\nAt which k value you want to update the node :- ";
+				cin>>k1;
+				cout<<"\nEnter the data to be updated at respective node :- ";
+				cin>>data1;
+				s.updateNodeByKey(k1,data1);
+				break;
+
+			case 6:
+				s.displayAllNodes();
+				break;
+
+			default:
+				break;
+		}
+		
+		cout<<"\nDo you want access another function :-> [y/n] ==> ";
+		cin>>option;
+		}while(option=='y' || option=='Y');
+	
+	return 0;
+}
+
+/*
+Output :-
+
+Menu:->
+Case 1:- Append Node function
+Case 2:- Prepend Node function
+Case 3:- Insert Node After function
+Case 4:- Delete Node Before function
+Case 5:- Update Node By Key function
+Case 6:- Display all Node function
+
+Enter the case :-> 6
+
+No node exits...
+
+Do you want access another function :-> [y/n] ==> y
+
+Menu:->
+Case 1:- Append Node function
+Case 2:- Prepend Node function
+Case 3:- Insert Node After function
+Case 4:- Delete Node Before function
+Case 5:- Update Node By Key function
+Case 6:- Display all Node function
+
+Enter the case :-> 1
+
+Enter the data to be stored in the respective node :- 12
+
+Enter the key to be stored in the respective node :- 1
+
+Node appended...
+
+Do you want access another function :-> [y/n] ==> y
+
+Menu:->
+Case 1:- Append Node function
+Case 2:- Prepend Node function
+Case 3:- Insert Node After function
+Case 4:- Delete Node Before function
+Case 5:- Update Node By Key function
+Case 6:- Display all Node function
+
+Enter the case :-> 6
+
+Single link list values are as follows :->
+        1 => 12
+
+Do you want access another function :-> [y/n] ==> y
+
+Menu:->
+Case 1:- Append Node function
+Case 2:- Prepend Node function
+Case 3:- Insert Node After function
+Case 4:- Delete Node Before function
+Case 5:- Update Node By Key function
+Case 6:- Display all Node function
+
+Enter the case :-> 2
+
+Enter the data to be stored in the respective node :- 122
+
+Enter the key to be stored in the respective node :- 2
+
+Node prepended...
+
+Do you want access another function :-> [y/n] ==> y
+
+Menu:->
+Case 1:- Append Node function
+Case 2:- Prepend Node function
+Case 3:- Insert Node After function
+Case 4:- Delete Node Before function
+Case 5:- Update Node By Key function
+Case 6:- Display all Node function
+
+Enter the case :-> 6
+
+Single link list values are as follows :->
+        2 => 122
+
+        1 => 12
+
+Do you want access another function :-> [y/n] ==> y
+
+Menu:->
+Case 1:- Append Node function
+Case 2:- Prepend Node function
+Case 3:- Insert Node After function
+Case 4:- Delete Node Before function
+Case 5:- Update Node By Key function
+Case 6:- Display all Node function
+
+Enter the case :-> 3
+
+At which k value you want to add another node :- 2
+
+Enter the data to be stored in the respective node :- 14
+
+Enter the key to be stored in the respective node :- 3
+
+Node is inserted...
+
+Do you want access another function :-> [y/n] ==> y
+
+Menu:->
+Case 1:- Append Node function
+Case 2:- Prepend Node function
+Case 3:- Insert Node After function
+Case 4:- Delete Node Before function
+Case 5:- Update Node By Key function
+Case 6:- Display all Node function
+
+Enter the case :-> 6
+
+Single link list values are as follows :->
+        2 => 122
+
+        3 => 14
+
+        1 => 12
+
+Do you want access another function :-> [y/n] ==> y
+
+Menu:->
+Case 1:- Append Node function
+Case 2:- Prepend Node function
+Case 3:- Insert Node After function
+Case 4:- Delete Node Before function
+Case 5:- Update Node By Key function
+Case 6:- Display all Node function
+
+Enter the case :-> 4
+
+At which k value you want to delete the node :- 2
+
+Node unlined successfully...
+
+Do you want access another function :-> [y/n] ==> y
+
+Menu:->
+Case 1:- Append Node function
+Case 2:- Prepend Node function
+Case 3:- Insert Node After function
+Case 4:- Delete Node Before function
+Case 5:- Update Node By Key function
+Case 6:- Display all Node function
+
+Enter the case :-> 6
+
+Single link list values are as follows :->
+        3 => 14
+
+        1 => 12
+
+Do you want access another function :-> [y/n] ==> y
+
+Menu:->
+Case 1:- Append Node function
+Case 2:- Prepend Node function
+Case 3:- Insert Node After function
+Case 4:- Delete Node Before function
+Case 5:- Update Node By Key function
+Case 6:- Display all Node function
+
+Enter the case :-> 5
+
+At which k value you want to update the node :- 3
+
+Enter the data to be updated at respective node :- 100
+
+Value updated successfully...
+
+Do you want access another function :-> [y/n] ==> y
+
+Menu:->
+Case 1:- Append Node function
+Case 2:- Prepend Node function
+Case 3:- Insert Node After function
+Case 4:- Delete Node Before function
+Case 5:- Update Node By Key function
+Case 6:- Display all Node function
+
+Enter the case :-> 6
+
+Single link list values are as follows :->
+        3 => 100
+
+        1 => 12
+
+Do you want access another function :-> [y/n] ==> n
+
+--------------------------------
+
+*/
