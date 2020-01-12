@@ -1,0 +1,76 @@
+/*
+Implementation of Bubble sort.
+*/
+
+#include<iostream>
+using namespace std;
+
+void bubbleSort(int arr[5])
+{
+	for(int i=0;i<5;i++)
+	{
+		for(int j=0;j<5-i;j++)
+		{
+			if(arr[j]>arr[j+1])
+			{
+				int temp;
+				temp = arr[j];
+				arr[j] = arr[j+1];
+				arr[j+1] = temp;
+			}
+		}
+	}
+}
+
+int main()
+{
+	int arr[5];
+	
+	cout<<"\nEnter the array elements :- \n";
+	for(int i=0;i<5;i++)
+	{
+		cin>>arr[i];
+	}
+	
+	cout<<"\nThe Unsorted array elements are as follows :- \n";
+	for(int i=0;i<5;i++)
+	{
+		cout<<arr[i]<<endl;
+	}
+	
+	bubbleSort(arr);
+	
+	cout<<"\nThe Sorted array elements are as follows :- \n";
+	for(int i=0;i<5;i++)
+	{
+		cout<<arr[i]<<endl;
+	}
+	return 0;
+}
+
+/*
+Output :-
+
+Enter the array elements :-
+9
+3
+6
+7
+2
+
+The Unsorted array elements are as follows :-
+9
+3
+6
+7
+2
+
+The Sorted array elements are as follows :-
+2
+3
+6
+7
+9
+
+--------------------------------
+*/
