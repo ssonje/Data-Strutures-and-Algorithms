@@ -1,0 +1,117 @@
+/*
+Implementation of Merge Sort.
+*/
+
+#include<iostream>
+using namespace std;
+
+void merge(int arr[5] , int l , int m , int r)
+{
+	int i = l;						//Starting index of array.
+	int j = m+1;					//First index of second half.
+	int k = l;						//First index of temperory array.
+	
+	int temp[5];					//Creating temperory array.
+
+	while(i<=m && j<=r)
+	{
+		if(arr[i]<=arr[j])			//arr[i] is smaller than arr[j].
+		{
+			temp[k] = arr[i];
+			k++;
+			i++;
+		}
+		else						//arr[i] is smaller than arr[j].
+		{
+			temp[k] = arr[j];
+			k++;
+			j++;
+		}
+	}
+	
+	while(i<=m)						//Copying all the elements from left subarray as it is. 
+	{
+		temp[k] = arr[i];
+		k++;
+		i++;
+	}
+	
+	while(j<=r)						//Copying all the elements from right subarray as it is.
+	{
+		temp[k] = arr[j];
+		k++;
+		j++;
+	}
+	
+	for(int a=l;a<=r;a++)			//Copying all the elements from temperory array as it is to the main array.
+	{
+		arr[a] = temp[a];
+	}
+}
+
+void mergeSort(int arr[5], int l ,int r)
+{
+	if(l<r)
+	{
+		int m = (l+r) / 2;
+		mergeSort(arr,l,m);
+		mergeSort(arr,m+1,r);
+		merge(arr,l,m,r);
+	}
+}
+
+int main()
+{
+	int size;
+	cout<<"\nEnter the size of the array :- ";
+	cin>>size;
+	
+	int arr[size];
+	
+	cout<<"\nEnter the array element :- \n";
+	for(int i=0;i<size;i++)
+	{
+		cin>>arr[i];
+	}
+	
+	cout<<"\nElements before the sort :- \n";
+	for(int i=0;i<size;i++)
+	{
+		cout<<arr[i]<<endl;
+	}
+	
+	mergeSort(arr,0,size);
+	
+	cout<<"\nElements after the sort :- \n";
+	for(int i=0;i<size;i++)
+	{
+		cout<<arr[i]<<endl;
+	}
+	return 0;
+}
+
+/*
+Output :- 
+
+Enter the size of the array :- 4
+
+Enter the array element :-
+9
+6
+8
+3
+
+Elements before the sort :-
+9
+6
+8
+3
+
+Elements after the sort :-
+3
+6
+8
+9
+
+--------------------------------
+*/
