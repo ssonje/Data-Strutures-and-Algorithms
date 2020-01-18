@@ -1,0 +1,432 @@
+/*
+Implementation of Binary Search Tree. 
+*/
+
+#include<iostream>
+using namespace std;
+
+class BST
+{
+	public:
+		
+		int value;
+		BST *left,*right;
+	
+		BST()
+		{
+			value = 0;
+			left = NULL;
+			right = NULL;
+		}
+		
+		BST(int v)
+		{
+			value = v;
+			left = right = NULL;
+		}
+		
+		BST *insertNode(BST *root, int v)
+		{
+			if(root == NULL)
+			{
+				return new BST(v);
+			}
+			
+			if(v > root->value)
+			{
+				root->right = insertNode(root->right , v);
+			}
+			else
+			{
+				root->left = insertNode(root->left , v);
+			}
+			return root;
+		}
+		
+		BST *findMin(BST *root)
+		{
+		    BST *temp = root; 
+  
+   			/* loop down to find the leftmost leaf */
+    		while (temp && temp->left != NULL) 
+     	    temp = temp->left; 
+  
+    		return temp;  
+		}
+		
+		BST *findMax(BST *root)
+		{
+		    BST *temp = root; 
+  
+   			/* loop down to find the leftmost leaf */
+    		while (temp && temp->right != NULL) 
+     	    temp = temp->right; 
+  
+    		return temp;  
+		}
+		
+		BST *deleteNode(BST *root , int key)
+		{
+			if(!root)
+			{
+				return NULL;
+			}
+			
+			if(key > root->value)
+			{
+				root->right = deleteNode(root->right , key);
+			}
+			else if(key < root->value)
+			{
+				root->left = deleteNode(root->left , key);
+			}
+			else
+			{
+				//case 1: No child
+				if(root->left == NULL && root->right == NULL)
+				{
+					delete(root);
+					root = NULL;
+				}
+				
+				//case 2: One Child
+				else if(root->left == NULL)		//node having right child
+				{
+					BST *temp = root;
+					root = root->right;
+					return temp;
+				}
+				else if(root->right == NULL)	//node having left child
+				{
+					BST *temp = root;
+					root = root->left;
+					return temp;
+				}
+				
+				//case 3: Two children
+				else if(root->left!=NULL && root->right!=NULL)
+				{
+					BST *temp = findMin(root->right);
+					temp->value = root->value;
+					root->right = deleteNode(root->right , temp->value);
+					return temp;
+				}
+			}
+			return root;
+		}
+		
+		void inOrder(BST *root)
+		{
+			if(!root)
+			{
+				return;
+			}
+			inOrder(root->left);
+			cout<<root->value<<" ";
+			inOrder(root->right);
+		}
+		
+		void preOrder(BST *root)
+		{
+			if(!root)
+			{
+				return;
+			}
+			cout<<root->value<<" ";
+			preOrder(root->left);
+			preOrder(root->right);
+		}
+		
+		void postOrder(BST *root)
+		{
+			if(!root)
+			{
+				return;
+			}
+			postOrder(root->left);
+			postOrder(root->right);
+			cout<<root->value<<" ";
+		}
+		
+		bool searchKey(BST *root , int key)
+		{
+			bool found;
+			
+			if(!root)
+			{
+				found = false;
+				return found;
+			}
+			
+			if(key > root->value)
+			{
+				found = searchKey(root->right,key);
+			}
+			else if(key < root->value)
+			{
+				found = searchKey(root->left,key);
+			}
+			else
+			{
+				found = true;
+			}
+			return found;
+		}
+};
+
+int main()
+{
+	int caseNo;
+	BST b, *root = NULL , *temp = NULL;
+	int element,ele,node;
+	int valueSearch;
+	char ch;
+	
+	do
+	{
+		cout<<"\nCase 1 : Insert key in the BST";
+		cout<<"\nCase 2 : In Order Traversal";
+		cout<<"\nCase 3 : Pre Order Traversal";
+		cout<<"\nCase 4 : Post Order Traversal";
+		cout<<"\nCase 5 : Search Key in the BST";
+		cout<<"\nCase 6 : Delete key in the BST";
+		cout<<"\nCase 7 : Find Minimum element in the BST";
+		cout<<"\nCase 8 : Find Maximum element in the BST";
+		
+		cout<<"\n\nEnter the case number :- ";
+		cin>>caseNo;
+		
+		switch(caseNo)
+		{
+			case 1:
+				{
+					cout<<"\nEnter how many elements you want to insert :- ";
+					cin>>element;
+				
+					for(int i=0;i<element;i++)
+					{
+						cout<<"\nEnter the element :- ";
+						cin>>ele;
+						root = b.insertNode(root, ele);
+					}
+				}
+				break;
+				
+			case 2:
+				{
+					cout<<"\n\nIn-order Traversal of the BST is as follows :- \n";
+					b.inOrder(root);
+				}	
+				break;
+				
+			case 3:
+				{
+					cout<<"\n\nPre-order Traversal of the BST is as follows :- \n";
+					b.preOrder(root);
+				}
+				break;
+				
+			case 4:
+				{
+					cout<<"\n\nPost-order Traversal of the BST is as follows :- \n";
+					b.postOrder(root);
+				}				
+				break;
+				
+			case 5:
+				{
+					cout<<"\nEnter the value to be search in the BST :- ";
+					cin>>valueSearch;
+					
+					bool ab = b.searchKey(root,valueSearch);
+					if(ab==1)
+					{
+						cout<<"\n\nElement Found !!!";
+					}
+					else
+					{
+						cout<<"\n\nElement Not Found !!!";
+					}
+				}
+				break;
+					
+			case 6:
+				{
+					cout<<"\nEnter the value to be deleted :- ";
+					cin>>node;
+					root = b.deleteNode(root,node);
+					cout<<"\n\nIn-order Traversal of the BST after deletion of node is as follows :- \n";
+					b.inOrder(root);
+				}
+				break;
+				
+			case 7:
+				{
+					temp = b.findMin(root);
+					cout<<"\n\nMinimum element of the BST is :- "<<temp->value;
+				}
+				break;
+				
+			case 8:
+				{
+					temp = b.findMax(root);
+					cout<<"\n\nMaximum element of the BST is :- "<<temp->value;
+				}
+				break;
+				
+			default:
+				cout<<"\nPlease enter the valid case !!!";
+				break;
+		}
+		
+		cout<<"\n\nDo you want to add another case :- ";
+		cin>>ch;
+		
+	}while(ch=='y' || ch=='Y');
+
+	return 0;
+}
+
+/*
+
+Output :- 
+
+
+Case 1 : Insert key in the BST
+Case 2 : In Order Traversal
+Case 3 : Pre Order Traversal
+Case 4 : Post Order Traversal
+Case 5 : Search Key in the BST
+Case 6 : Delete key in the BST
+Case 7 : Find Minimum element in the BST
+Case 8 : Find Maximum element in the BST
+
+Enter the case number :- 1
+
+Enter how many elements you want to insert :- 4
+
+Enter the element :- 10
+
+Enter the element :- 5
+
+Enter the element :- 15
+
+Enter the element :- 1
+
+Do you want to add another case :- y
+
+Case 1 : Insert key in the BST
+Case 2 : In Order Traversal
+Case 3 : Pre Order Traversal
+Case 4 : Post Order Traversal
+Case 5 : Search Key in the BST
+Case 6 : Delete key in the BST
+Case 7 : Find Minimum element in the BST
+Case 8 : Find Maximum element in the BST
+
+Enter the case number :- 2
+
+In-order Traversal of the BST is as follows :-
+1 5 10 15
+
+Do you want to add another case :- y
+
+Case 1 : Insert key in the BST
+Case 2 : In Order Traversal
+Case 3 : Pre Order Traversal
+Case 4 : Post Order Traversal
+Case 5 : Search Key in the BST
+Case 6 : Delete key in the BST
+Case 7 : Find Minimum element in the BST
+Case 8 : Find Maximum element in the BST
+
+Enter the case number :- 3
+
+Pre-order Traversal of the BST is as follows :-
+10 5 1 15
+
+Do you want to add another case :- y
+
+Case 1 : Insert key in the BST
+Case 2 : In Order Traversal
+Case 3 : Pre Order Traversal
+Case 4 : Post Order Traversal
+Case 5 : Search Key in the BST
+Case 6 : Delete key in the BST
+Case 7 : Find Minimum element in the BST
+Case 8 : Find Maximum element in the BST
+
+Enter the case number :- 4
+
+Post-order Traversal of the BST is as follows :-
+1 5 15 10
+
+Do you want to add another case :- y
+
+Case 1 : Insert key in the BST
+Case 2 : In Order Traversal
+Case 3 : Pre Order Traversal
+Case 4 : Post Order Traversal
+Case 5 : Search Key in the BST
+Case 6 : Delete key in the BST
+Case 7 : Find Minimum element in the BST
+Case 8 : Find Maximum element in the BST
+
+Enter the case number :- 5
+
+Enter the value to be search in the BST :- 2
+
+Element Not Found !!!
+
+Do you want to add another case :- y
+
+Case 1 : Insert key in the BST
+Case 2 : In Order Traversal
+Case 3 : Pre Order Traversal
+Case 4 : Post Order Traversal
+Case 5 : Search Key in the BST
+Case 6 : Delete key in the BST
+Case 7 : Find Minimum element in the BST
+Case 8 : Find Maximum element in the BST
+
+Enter the case number :- 6
+
+Enter the value to be deleted :- 1
+
+In-order Traversal of the BST after deletion of node is as follows :-
+5 10 15
+
+Do you want to add another case :- y
+
+Case 1 : Insert key in the BST
+Case 2 : In Order Traversal
+Case 3 : Pre Order Traversal
+Case 4 : Post Order Traversal
+Case 5 : Search Key in the BST
+Case 6 : Delete key in the BST
+Case 7 : Find Minimum element in the BST
+Case 8 : Find Maximum element in the BST
+
+Enter the case number :- 7
+
+Minimum element of the BST is :- 5
+
+Do you want to add another case :- y
+
+Case 1 : Insert key in the BST
+Case 2 : In Order Traversal
+Case 3 : Pre Order Traversal
+Case 4 : Post Order Traversal
+Case 5 : Search Key in the BST
+Case 6 : Delete key in the BST
+Case 7 : Find Minimum element in the BST
+Case 8 : Find Maximum element in the BST
+
+Enter the case number :- 8
+
+Maximum element of the BST is :- 15
+
+Do you want to add another case :- n
+
+--------------------------------
+*/
