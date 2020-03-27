@@ -18,14 +18,12 @@ class node
 	public: 
 	
 		int key,data;
-		node *previous;
 		node *next;
 
 		node()
 		{
 			key = 0;
 			data = 0;
-			previous = NULL;
 			next = NULL;
 		}	
 
@@ -34,7 +32,6 @@ class node
 			key = k;
 			data = d;
 			next = NULL;
-			previous = NULL;
 		}
 };
 
@@ -98,7 +95,7 @@ class circularLinkList
 					node *temp; 
 					temp=head;
 					
-					while(temp->next != NULL)
+					while(temp->next != head)
 					{
 						temp = temp -> next;
 					}
