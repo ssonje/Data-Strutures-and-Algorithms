@@ -1,0 +1,228 @@
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+class BST
+{
+	public:
+		
+		int data;
+		BST *left;
+		BST *right;
+	
+		BST()
+		{
+			data = 0;
+			left = NULL;
+			right = NULL;
+		}
+		
+		BST(int value)
+		{
+			data = value;
+			left = NULL;
+			right = NULL;
+		}
+		
+		BST *Insert(BST *root, int value)
+		{
+			// tree is empty
+			if(root == NULL)
+			{
+				return new BST(value);
+			}	
+			
+			// data is greater than root then insert to root of right	
+			else if(value>root->data)
+			{
+				root -> right = Insert(root->right,value);
+			}
+			
+			// data is lesser than root then insert to root of left
+			else
+			{
+				root -> left = Insert(root->left,value);
+			}
+			
+			// return back the root node
+			return root;
+		}
+		
+		bool Search(BST *root,int value)
+		{
+			// first case :- root is NULL i.e. tree is empty
+			if(root==NULL)
+			{
+				return false;
+			}
+			
+			// second case :- required data is of root's data
+			else if(root->data==value)
+			{
+				return true;
+			}
+			
+			// third case :- required data is greater that root of data
+			else if(root->data<value)
+			{
+				return Search(root->right,value);
+			}
+			
+			// fourth case :- required data is lesser that root of data
+			else 
+			{
+				return Search(root->left,value);
+			}
+		}	 
+		
+		// inorder traversal of tree
+		void Inorder(BST *root)
+		{	
+			if(!root)
+			{
+				return;
+			}
+			Inorder(root->left);
+			cout<<root->data<<" ";
+			Inorder(root->right);
+		}
+		
+		// find minimum node in the right sub tree
+		BST *findMinimum(BST *root)
+		{
+			BST *temp = root;
+			
+			while(temp && temp->left!=NULL)
+			{
+				temp = temp -> left;
+			}
+			
+			return temp;
+		}
+		
+		// find maximum node in the left sub tree
+		BST *findMaximum(BST *root)
+		{
+			BST *temp = root;
+			
+			while(temp && temp->right!=NULL)
+			{
+				temp = temp -> right;
+			}
+			
+			return temp;
+		}
+		
+		// deletion a node from BST
+		BST *Deletion(BST *root, int value)
+		{
+			// first case :- root is NULL i.e. tree is empty
+			if(root==NULL)
+			{
+				return root;
+			}
+
+			// second case :- required data is greater that root of data
+			else if(root->data<value)
+			{
+				root->right =  Deletion(root->right,value);
+			}
+			
+			// third case :- required data is lesser that root of data
+			else if(root->data>value)
+			{
+				root->left =  Deletion(root->left,value);
+			}
+			
+			// deletion process
+			else
+			{
+				// Case 1 :- deletion of node with no child
+				if(root->left==NULL && root->right==NULL)
+				{
+					delete root;
+					root = NULL;
+				}
+			
+				// Case 2 :- deletion of node with one child
+				// for left child is NULL
+				else if(root->left==NULL)
+				{
+					BST *temp = root;
+					root = root -> right;
+					delete temp; 
+				}
+				
+				// for right child is NULL
+				else if(root->right==NULL)
+				{
+					BST *temp = root;
+					root = root -> left;
+					delete temp;
+				}
+				
+				// Case 3 :- deletion of node with two child
+				else
+				{
+					BST *temp = findMinimum(root->right);
+					root->data = temp->data;
+					root->right = Deletion(root->right,temp->data);
+				}
+			}
+			return root;
+		}
+};
+
+int main()
+{
+	// create an object for class BST
+	BST obj;
+	
+	// create a empty BST
+	BST *root = NULL;
+	
+	// insert function
+	root = obj.Insert(root,15);
+	root = obj.Insert(root,10);
+	root = obj.Insert(root,20);
+	root = obj.Insert(root,5);
+	root = obj.Insert(root,12);
+	root = obj.Insert(root,200);
+	
+	// printing the inorder traversal of tree
+	cout<<"\nINORDER TRAVERSAL OF TREE :- \n";
+	obj.Inorder(root);
+	
+	// search the given number
+	int num;
+	cout<<"\nEnter the number to be search :- ";
+	cin>>num;
+	if(obj.Search(root,num))
+	{
+		cout<<"\nNumber is Found\n";
+	}
+	else
+	{
+		cout<<"\nNumber is not Found\n";
+	}
+	
+	// delete the node with no child
+	root = obj.Deletion(root,12);
+	// printing the inorder traversal of tree
+	cout<<"\nINORDER TRAVERSAL OF TREE :- \n";
+	obj.Inorder(root);
+	
+	// delete the node with one child
+	root = obj.Deletion(root,10);
+	// printing the inorder traversal of tree
+	cout<<"\nINORDER TRAVERSAL OF TREE :- \n";
+	obj.Inorder(root);
+	
+	// delete the node with two child
+	root = obj.Deletion(root,20);
+	// printing the inorder traversal of tree
+	cout<<"\nINORDER TRAVERSAL OF TREE :- \n";
+	obj.Inorder(root);
+	
+	return 0;
+}
